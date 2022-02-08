@@ -1,5 +1,7 @@
 let canvas = document.getElementById("snake");
 let context = canvas.getContext("2d");
+let pontos = 0;
+
 let box = 32;
 let snake = [];
 snake[0] = {
@@ -12,21 +14,25 @@ let food = {
     y:Math.floor(Math.random() * 15 + 1) * box
 }
 
+
+
 function createBackground() {
-    context.fillStyle = "lightgreen";
+    context.fillStyle = "#454343";
     context.fillRect(0, 0, 16 * box, 16 * box);
 }
 
 function createSnake(){
+    
     for(i=0; i<snake.length; i++){
         context.fillStyle = "green";
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
 }
 
-function drawFood(){
+function drawFood(){    
     context.fillStyle = "red";
-    context.fillRect(food.x, food.y, box, box)
+    context.fillRect(food.x, food.y, box, box)  
+    
 }
 
 document.addEventListener('keydown', update);
@@ -40,6 +46,7 @@ function update(event) {
 
 
 function startGame(){
+
     if(snake[0].x > 15 * box && direction == "right") snake[0].x = 0;
     if(snake[0].x < 0 && direction == "left") snake[0].x = 16 * box;
     if(snake[0].y > 15 * box && direction == "down") snake[0].y = 0;
@@ -50,12 +57,13 @@ function startGame(){
             let end = document.getElementById('somGameover')    
             clearInterval(game);
             end.play()
-            //alert('Game Over')
-            document.getElementById('scoreboard').innerHTML = '<h1>FIM DE JOGO</h1>'
-            
+            document.getElementById('scoreboard').innerHTML = '<h1>Fim de Jogo</h1><h2>Total de ' + pontos+ ' Pontos</h2>'            
 
         }
     }
+
+
+
 
     createBackground();
     createSnake();
@@ -74,6 +82,10 @@ function startGame(){
     }else{
         food.x = Math.floor(Math.random() * 15 + 1) * box;
         food.y = Math.floor(Math.random() * 15 + 1) * box;
+        pontos = pontos +1
+        document.getElementById('score').innerText = pontos
+
+
     }
 
     let newHead = {
@@ -81,16 +93,20 @@ function startGame(){
         y: snakeY
     }
 
-    snake.unshift(newHead)      
+    snake.unshift(newHead)   
 
-}   
+    
+    }   
 
-    let game = setInterval(startGame, 100); 
+let game = setInterval(startGame, 100); 
+
+
+
+
         
         
         
-        
-        
+           
         
         
         
